@@ -1,6 +1,6 @@
 import LoginForm from "../molecules/Login/formLogin";
 import { Flex } from "antd";
-import { loginUser } from "../api/api";
+import { loginUser } from "../api/login";
 import { useNavigate } from "react-router-dom";
 import { getUserFromToken } from "../../utils/getUserFromToken";
 import { saveToken } from "../../utils/auth";
