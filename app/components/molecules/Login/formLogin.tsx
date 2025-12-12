@@ -1,8 +1,8 @@
 import { Card, Form, Input, Checkbox, Space, Typography } from "antd";
 import { useState } from "react";
 import { EyeOutlined, EyeInvisibleOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
+import { Link as RouterLink } from "react-router-dom"; //sin alias no funciona xd 
 import PrimaryButton from "../../atoms/primaryButton";
-import { Link as RouterLink } from "react-router-dom";
 
 const { Text, Link } = Typography;
 
@@ -57,7 +57,11 @@ export default function LoginForm({ onSubmit, loading = false }: LoginFormProps)
           name="correo" 
           rules={[
             { required: true, message: "Por favor ingresa tu correo" },
-            { type: "email", message: "Ingresa un correo válido" }
+            //{ type: "email", message: "Ingresa un correo válido" },
+            { 
+              pattern: /^[^\s@]+@[^\s@]+$/, 
+              message: "Ingresa un correo válido" 
+            }
           ]}
         >
           <Input
@@ -77,7 +81,7 @@ export default function LoginForm({ onSubmit, loading = false }: LoginFormProps)
         {/* contra */}
         <Form.Item 
           label={<span style={{ color: "#FFFFFF", fontFamily: "Roboto, sans-serif" }}>Contraseña</span>}
-          name="password" 
+          name="contrasenia" 
           rules={[
             { required: true, message: "Por favor ingresa tu contraseña" },
             { min: 6, message: "La contraseña debe tener al menos 6 caracteres" }
@@ -146,16 +150,17 @@ export default function LoginForm({ onSubmit, loading = false }: LoginFormProps)
             fontSize: 14
           }}>
             ¿No tienes cuenta?{" "}
-            <Link 
-              href="/registro" 
+            <RouterLink 
+              to="/registro"
               style={{ 
                 color: "#39FF14",
                 fontWeight: 500,
-                fontFamily: "Roboto, sans-serif"
+                fontFamily: "Roboto, sans-serif",
+                textDecoration: "none"
               }}
             >
               Regístrate aquí
-            </Link>
+            </RouterLink>
           </Text>
         </div>
 
