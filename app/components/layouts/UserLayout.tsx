@@ -1,9 +1,9 @@
-import { Layout, Tabs, Row, Col, Input, Space, Avatar, Dropdown, message } from "antd";
+import { Layout, Tabs, Row, Col, Input, Space, Avatar, Dropdown, message, Spin } from "antd";
 import { UserOutlined, SearchOutlined, LogoutOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { removeToken, getUserFromToken } from "~/utils/auth";
-import { mockProducts, categories } from "~/data/mockProducts";
+import { getProducts } from "~/components/api/products";
 import { addToCart } from "~/utils/cartUtils";
 import ProductCard from "~/components/atoms/productCard";
 import FilterSidebar from "~/components/molecules/FilterSidebar";
@@ -17,11 +17,31 @@ export default function UserLayout() {
   const user = getUserFromToken();
 
   // estados
+  const [products, setProducts] = useState<any[]>([]); 
+  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("Todos");
   const [searchTerm, setSearchTerm] = useState("");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000000]);
   const [minRating, setMinRating] = useState(0);
   const [cartOpen, setCartOpen] = useState(false);
+
+  /// cargar productos
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const loadProducts = async () => {
+    try {
+      setLoading(true);
+      const data = await getProducts();
+      setProducts(data);
+    } catch (error) {
+      message.error("Error al cargar productos");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLogout = () => {
     removeToken();
@@ -61,20 +81,23 @@ export default function UserLayout() {
   };
 
   // filtrar productos
-  const filteredProducts = mockProducts.filter((product) => {
+  const filteredProducts = products.filter((product) => {
     const matchesCategory = selectedCategory === "Todos" || product.category === selectedCategory;
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
-    const matchesRating = product.rating >= minRating;
+    const matchesRating = minRating === 0 || (product.rating && product.rating >= minRating);
 
     return matchesCategory && matchesSearch && matchesPrice && matchesRating;
   });
 
-  // tabs de categorías
-  const categoryTabs = [
-    { key: "Todos", label: "Todos los Productos" },
-    ...categories.map((cat) => ({ key: cat, label: cat }))
-  ];
+  // obbtener categorias unicas
+  const categories = ["Todos", ...new Set(products.map(p => p.category))];
+
+  // tabs de categorias
+  const categoryTabs = categories.map(cat => ({
+    key: cat,
+    label: cat === "Todos" ? "Todos los Productos" : cat
+  }));
 
   return (
     <Layout style={{ minHeight: "100vh", background: "#000000" }}>
@@ -121,10 +144,8 @@ export default function UserLayout() {
             }}
           />
 
-          {/* cart */}
           <CartBadge onClick={() => setCartOpen(true)} />
 
-          {/* usuario */}
           <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
             <Space style={{ cursor: "pointer" }}>
               <Avatar 
@@ -138,7 +159,7 @@ export default function UserLayout() {
                 color: "#FFFFFF",
                 fontFamily: "Roboto, sans-serif"
               }}>
-                {user?.nombre}
+                {user?.nombre || user?.sub}
               </span>
             </Space>
           </Dropdown>
@@ -164,63 +185,73 @@ export default function UserLayout() {
       </div>
 
       <Content style={{ padding: "24px" }}>
-        <Row gutter={24}>
-          <Col xs={24} lg={6}>
-            <div style={{ position: "sticky", top: 140 }}>
-              <FilterSidebar
-                priceRange={priceRange}
-                onPriceChange={setPriceRange}
-                minRating={minRating}
-                onRatingChange={setMinRating}
-                onClearFilters={clearFilters}
-              />
-            </div>
-          </Col>
-          <Col xs={24} lg={18}>
-            <div style={{ marginBottom: 16 }}>
-              <h2 style={{ 
-                color: "#FFFFFF",
-                fontFamily: "Orbitron, sans-serif",
-                fontSize: 20
-              }}>
-                {selectedCategory === "Todos" ? "Todos los Productos" : selectedCategory}
-              </h2>
-              <p style={{ 
-                color: "#D3D3D3",
-                fontFamily: "Roboto, sans-serif",
-                fontSize: 14
-              }}>
-                {filteredProducts.length} productos encontrados
-              </p>
-            </div>
-
-            <Row gutter={[16, 16]}>
-              {filteredProducts.map((product) => (
-                <Col xs={24} sm={12} lg={8} key={product.id}>
-                  <ProductCard 
-                    product={product} 
-                    onAddToCart={handleAddToCart}
-                  />
-                </Col>
-              ))}
-            </Row>
-
-            {filteredProducts.length === 0 && (
-              <div style={{ 
-                textAlign: "center", 
-                padding: 60,
-                color: "#D3D3D3",
-                fontFamily: "Roboto, sans-serif"
-              }}>
-                <h3 style={{ color: "#FFFFFF" }}>No se encontraron productos</h3>
-                <p>Intenta ajustar los filtros o busca otro término</p>
+        {loading ? (
+          <div style={{ 
+            display: "flex", 
+            justifyContent: "center", 
+            alignItems: "center", 
+            minHeight: "60vh" 
+          }}>
+            <Spin size="large" />
+          </div>
+        ) : (
+          <Row gutter={24}>
+            <Col xs={24} lg={6}>
+              <div style={{ position: "sticky", top: 140 }}>
+                <FilterSidebar
+                  priceRange={priceRange}
+                  onPriceChange={setPriceRange}
+                  minRating={minRating}
+                  onRatingChange={setMinRating}
+                  onClearFilters={clearFilters}
+                />
               </div>
-            )}
-          </Col>
-        </Row>
+            </Col>
+            <Col xs={24} lg={18}>
+              <div style={{ marginBottom: 16 }}>
+                <h2 style={{ 
+                  color: "#FFFFFF",
+                  fontFamily: "Orbitron, sans-serif",
+                  fontSize: 20
+                }}>
+                  {selectedCategory === "Todos" ? "Todos los Productos" : selectedCategory}
+                </h2>
+                <p style={{ 
+                  color: "#D3D3D3",
+                  fontFamily: "Roboto, sans-serif",
+                  fontSize: 14
+                }}>
+                  {filteredProducts.length} productos encontrados
+                </p>
+              </div>
+
+              <Row gutter={[16, 16]}>
+                {filteredProducts.map((product) => (
+                  <Col xs={24} sm={12} lg={8} key={product.id}>
+                    <ProductCard 
+                      product={product} 
+                      onAddToCart={handleAddToCart}
+                    />
+                  </Col>
+                ))}
+              </Row>
+
+              {filteredProducts.length === 0 && (
+                <div style={{ 
+                  textAlign: "center", 
+                  padding: 60,
+                  color: "#D3D3D3",
+                  fontFamily: "Roboto, sans-serif"
+                }}>
+                  <h3 style={{ color: "#FFFFFF" }}>No se encontraron productos</h3>
+                  <p>Intenta ajustar los filtros o busca otro término</p>
+                </div>
+              )}
+            </Col>
+          </Row>
+        )}
       </Content>
 
-      {/* drawer carrito*/}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
     </Layout>
   );
