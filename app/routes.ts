@@ -6,4 +6,5 @@ export default [
    route("/admin", "routes/admin.tsx"),
    route("/usuario", "routes/usuario.tsx"),
    route("/home", "routes/home.tsx"),
+   route("/usuario/mis-compras", "routes/miscompras.tsx"),
 ];

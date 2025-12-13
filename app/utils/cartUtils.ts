@@ -16,6 +16,33 @@ export function getCart(): CartItem[] {
   return cart ? JSON.parse(cart) : [];
 }
 
+export function calculateSubtotal(total: number): number {
+  return Math.round(total / 1.19);
+}
+
+export function calculateIVA(total: number): number {
+  const subtotal = calculateSubtotal(total);
+  return total - subtotal;
+}
+
+export function getCartSummary() {
+  const total = getCartTotal();
+  const subtotal = calculateSubtotal(total);
+  const iva = calculateIVA(total);
+  
+  return {
+    subtotal,
+    iva,
+    total
+  };
+}
+
+export function clearCart() {
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem(CART_KEY);
+  window.dispatchEvent(new Event("cartUpdated"));
+}
+
 function saveCart(cart: CartItem[]): void {
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
   window.dispatchEvent(new Event("cartUpdated"));
@@ -52,10 +79,6 @@ export function removeFromCart(productId: string): void {
   const cart = getCart();
   const filteredCart = cart.filter(i => i.productId !== productId);
   saveCart(filteredCart);
-}
-
-export function clearCart(): void {
-  saveCart([]);
 }
 
 export function getCartItemCount(): number {

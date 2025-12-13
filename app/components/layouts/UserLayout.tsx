@@ -50,9 +50,10 @@ export default function UserLayout() {
 
   const userMenuItems = [
     {
-      key: "profile",
+      key: "miscompras",
       icon: <UserOutlined />,
-      label: "Mi Perfil",
+      label: "Mis compras",
+      onClick: () => navigate("/usuario/mis-compras"),
     },
     {
       key: "logout",

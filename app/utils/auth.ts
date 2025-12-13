@@ -15,21 +15,21 @@ function isBrowser(): boolean {
 }
 
 export function getToken(): string | null {
+  if (!isBrowser()) return null;
   return localStorage.getItem(TOKEN_KEY);
 }
 
-//guardar
 export function saveToken(token: string): void {
+  if (!isBrowser()) return;
   localStorage.setItem(TOKEN_KEY, token);
 }
 
-//log out
 export function removeToken(): void {
+  if (!isBrowser()) return;
   localStorage.removeItem(TOKEN_KEY);
 }
 
 export function getUserFromToken(): DecodedToken | null {
-
   if (!isBrowser()) return null;
 
   const token = getToken();
@@ -39,7 +39,6 @@ export function getUserFromToken(): DecodedToken | null {
   try {
     const decoded = jwtDecode<DecodedToken>(token);
     
-    //expiracion
     const currentTime = Math.floor(Date.now() / 1000);
     if (decoded.exp < currentTime) {
       removeToken();
