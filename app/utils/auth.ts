@@ -4,9 +4,14 @@ const TOKEN_KEY = "jwt";
 
 export interface DecodedToken {
   sub: string;
+  nombre: string;
   roles: string[];
   exp: number;
   iat: number;
+}
+
+function isBrowser(): boolean {
+  return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
 }
 
 export function getToken(): string | null {
@@ -24,6 +29,9 @@ export function removeToken(): void {
 }
 
 export function getUserFromToken(): DecodedToken | null {
+
+  if (!isBrowser()) return null;
+
   const token = getToken();
   
   if (!token) return null;

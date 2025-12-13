@@ -138,7 +138,7 @@ export default function UserLayout() {
                 color: "#FFFFFF",
                 fontFamily: "Roboto, sans-serif"
               }}>
-                {user?.sub}
+                {user?.nombre}
               </span>
             </Space>
           </Dropdown>

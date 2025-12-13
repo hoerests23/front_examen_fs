@@ -23,7 +23,9 @@ export default function LoginForm({ onSubmit, loading = false }: LoginFormProps)
         borderRadius: 12,
         boxShadow: "0 0 20px rgba(30, 144, 255, 0.3)",
       }}
-      bodyStyle={{ padding: 32 }}
+      styles={{
+        body: { padding: 32 } 
+      }}
     >
       {/* header */}
       <div style={{ textAlign: "center", marginBottom: 32 }}>
