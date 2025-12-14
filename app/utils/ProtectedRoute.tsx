@@ -1,27 +1,46 @@
-import { Navigate } from "react-router";
-import { getUserFromToken } from "./getUserFromToken";
+import { Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getUserFromToken } from "./auth";
 import type { ReactNode } from "react";
 
+interface ProtectedRouteProps {
+  children: ReactNode;
+  rolesPermitidos?: string[];
+}
+
 export default function ProtectedRoute({
-   children,
-   rolesPermitidos = [],
-}: {
-   children: ReactNode;
-   rolesPermitidos?: string[];
-}) {
-   const user = getUserFromToken();
+  children,
+  rolesPermitidos = [],
+}: ProtectedRouteProps) {
+  const [isClient, setIsClient] = useState(false);
 
-   if (!user) {
-      return <Navigate to="/" replace />;
-   }
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
-   const tienePermiso =
-      rolesPermitidos.length === 0 ||
-      user.roles?.some((r: string) => rolesPermitidos.includes(r));
+  if (!isClient) {
+    return null;
+  }
 
-   if (!tienePermiso) {
-      return <Navigate to="/" replace />;
-   }
+  const user = getUserFromToken();
 
-   return <>{children}</>;
+  if (!user) {
+    return <Navigate to="/" replace />;
+  }
+
+  if (rolesPermitidos.length > 0) {
+    const tienePermiso = user.roles.some((rol) =>
+      rolesPermitidos.includes(rol)
+    );
+
+    if (!tienePermiso) {
+      if (user.roles.includes("ROLE_ADMIN")) {
+        return <Navigate to="/admin" replace />;
+      } else {
+        return <Navigate to="/usuario" replace />;
+      }
+    }
+  }
+
+  return <>{children}</>;
 }

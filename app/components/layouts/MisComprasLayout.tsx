@@ -1,11 +1,12 @@
 import { Layout, Space, Avatar, Dropdown, Card, Spin, Empty, Tag, Collapse, Button } from "antd";
-import { UserOutlined, LogoutOutlined, ArrowLeftOutlined, CalendarOutlined, ShoppingOutlined } from "@ant-design/icons";
+import { UserOutlined, LogoutOutlined, ArrowLeftOutlined, CalendarOutlined, ShoppingOutlined, FileTextOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { removeToken, getUserFromToken, getToken } from "~/utils/auth";
 import { getMisVentas } from "~/components/api/ventas";
 import type { VentaResponse } from "~/components/api/ventas";
 import { formatPrice } from "~/utils/cartUtils";
+import BoletaModal from "~/components/organisms/BoletaModal";
 
 const { Header, Content } = Layout;
 
@@ -14,6 +15,8 @@ export default function MisComprasLayout() {
   const user = getUserFromToken();
   const [ventas, setVentas] = useState<VentaResponse[]>([]);
   const [loading, setLoading] = useState(true);
+  const [boletaOpen, setBoletaOpen] = useState(false);
+  const [selectedVenta, setSelectedVenta] = useState<VentaResponse | null>(null);
 
   useEffect(() => {
     const fetchVentas = async () => {
@@ -42,6 +45,11 @@ export default function MisComprasLayout() {
   };
 
   const userMenuItems = [
+    {
+      key: "profile",
+      icon: <UserOutlined />,
+      label: "Mi Perfil",
+    },
     {
       key: "logout",
       icon: <LogoutOutlined />,
@@ -204,6 +212,25 @@ export default function MisComprasLayout() {
                       >
                         Orden #{venta.id}
                       </Tag>
+                      <Button
+                        type="primary"
+                        size="small"
+                        icon={<FileTextOutlined />}
+                        onClick={() => {
+                          setSelectedVenta(venta);
+                          setBoletaOpen(true);
+                        }}
+                        style={{
+                          background: "#39FF14",
+                          color: "#000",
+                          border: "none",
+                          fontFamily: "Roboto, sans-serif",
+                          fontWeight: "bold",
+                          marginLeft: 8
+                        }}
+                      >
+                        Ver Boleta
+                      </Button>
                     </div>
                     <div style={{ textAlign: "right" }}>
                       <div style={{
@@ -306,6 +333,12 @@ export default function MisComprasLayout() {
           )}
         </Card>
       </Content>
+
+      <BoletaModal 
+        open={boletaOpen} 
+        onClose={() => setBoletaOpen(false)} 
+        venta={selectedVenta}
+      />
     </Layout>
   );
 }

@@ -3,7 +3,7 @@ import { UserOutlined, SearchOutlined, LogoutOutlined } from "@ant-design/icons"
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { removeToken, getUserFromToken } from "~/utils/auth";
-import { getProducts } from "~/components/api/products";
+import { getProducts } from "~/components/api/productos";
 import { addToCart } from "~/utils/cartUtils";
 import ProductCard from "~/components/atoms/productCard";
 import FilterSidebar from "~/components/molecules/FilterSidebar";

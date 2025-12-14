@@ -5,6 +5,9 @@ export interface ProductoBackend {
   stock: number;
   imagen: string;
   categoriaId: number;
+  descripcion?: string;
+  rating?: number;
+  numResenas?: number;
 } //interfaz para coincidir con el backend
 
 export interface Product {
@@ -39,10 +42,10 @@ function mapProductoToFrontend(producto: ProductoBackend): Product {
     category: categoryMap[producto.categoriaId] || "Sin categoría",
     price: producto.precio,
     image: producto.imagen || "https://via.placeholder.com/400",
-    description: "", 
+    description: producto.descripcion || "Sin descripción", 
     stock: producto.stock,
-    rating: 0, 
-    reviews: 0 
+    rating: producto.rating || 0,
+    reviews: producto.numResenas || 0,
   };
 }
 
