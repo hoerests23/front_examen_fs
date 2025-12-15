@@ -29,12 +29,15 @@ type Pages = {
   "/usuario/mis-compras": {
     params: {};
   };
+  "/admin/ventas": {
+    params: {};
+  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/registro" | "/admin" | "/usuario" | "/home" | "/usuario/mis-compras";
+    page: "/" | "/registro" | "/admin" | "/usuario" | "/home" | "/usuario/mis-compras" | "/admin/ventas";
   };
   "routes/login.tsx": {
     id: "routes/login";
@@ -60,6 +63,10 @@ type RouteFiles = {
     id: "routes/miscompras";
     page: "/usuario/mis-compras";
   };
+  "routes/adminventas.tsx": {
+    id: "routes/adminventas";
+    page: "/admin/ventas";
+  };
 };
 
 type RouteModules = {
@@ -70,4 +77,5 @@ type RouteModules = {
   "routes/usuario": typeof import("./app/routes/usuario.tsx");
   "routes/home": typeof import("./app/routes/home.tsx");
   "routes/miscompras": typeof import("./app/routes/miscompras.tsx");
+  "routes/adminventas": typeof import("./app/routes/adminventas.tsx");
 };

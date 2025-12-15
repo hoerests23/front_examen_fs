@@ -40,7 +40,6 @@ export default function BoletaModal({ open, onClose, venta }: BoletaModalProps) 
           fontFamily: "Roboto, monospace"
         }}
       >
-        {/* ENCABEZADO TIENDA */}
         <div style={{ textAlign: "center", marginBottom: 24 }}>
           <h1 style={{ 
             margin: 0,
@@ -67,7 +66,6 @@ export default function BoletaModal({ open, onClose, venta }: BoletaModalProps) 
 
         <Divider style={{ margin: "16px 0", borderColor: "#000" }} />
 
-        {/* DATOS DE LA BOLETA */}
         <div style={{ marginBottom: 20 }}>
           <div style={{ 
             background: "#f0f0f0",
@@ -95,7 +93,6 @@ export default function BoletaModal({ open, onClose, venta }: BoletaModalProps) 
           </div>
         </div>
 
-        {/* TABLA DE PRODUCTOS */}
         <div style={{ marginBottom: 20 }}>
           <table style={{ 
             width: "100%", 
@@ -142,7 +139,7 @@ export default function BoletaModal({ open, onClose, venta }: BoletaModalProps) 
           </table>
         </div>
 
-        {/* TOTALES */}
+        {/* totales */}
         <div style={{ marginTop: 20 }}>
           <div style={{ 
             display: "flex", 
@@ -177,14 +174,14 @@ export default function BoletaModal({ open, onClose, venta }: BoletaModalProps) 
 
         <Divider style={{ margin: "16px 0", borderColor: "#000" }} />
 
-        {/* PIE DE BOLETA */}
+        {/* boleta inf */}
         <div style={{ 
           textAlign: "center",
           fontSize: 10,
           color: "#666",
           marginTop: 20
         }}>
-          <p style={{ margin: "4px 0" }}>
+          <p style={{ margin: "4px 0", fontSize: 12 }}>
             *** BOLETA ELECTRÓNICA ***
           </p>
           <p style={{ margin: "4px 0" }}>
@@ -193,16 +190,13 @@ export default function BoletaModal({ open, onClose, venta }: BoletaModalProps) 
           <p style={{ margin: "4px 0" }}>
             ¡Sigue jugando con Level-Up Gamer!
           </p>
-          <p style={{ margin: "12px 0 4px 0", fontSize: 9 }}>
-            Documento Tributario Electrónico
-          </p>
-          <p style={{ margin: "4px 0", fontSize: 9 }}>
-            Timbre Electrónico SII
+          <p style={{ margin: "12px 0 4px 0"}}>
+            Documento Tributario Electrónico (emitido por nosotros, no por el SII xD)
           </p>
         </div>
       </div>
 
-      {/* BOTONES DE ACCIÓN */}
+      {/* btnes */}
       <div style={{ 
         padding: 16,
         background: "#1a1a1a",

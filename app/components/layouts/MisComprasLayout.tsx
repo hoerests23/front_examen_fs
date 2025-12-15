@@ -48,7 +48,7 @@ export default function MisComprasLayout() {
     {
       key: "profile",
       icon: <UserOutlined />,
-      label: "Mi Perfil",
+      label: "Mis compras",
     },
     {
       key: "logout",

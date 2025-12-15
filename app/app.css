@@ -28,7 +28,6 @@ body {
 .ant-card-head {
   background: #1a1a1a !important;
   border-bottom: 1px solid #333 !important;
-  color: #FFFFFF !important;
 }
 
 .ant-card-head-title {
@@ -69,19 +68,24 @@ body {
   background: #39FF14 !important;
 }
 
-.ant-input {
+.ant-input,
+.ant-input-number-input,
+textarea.ant-input {
   background: #000000 !important;
   border: 1px solid #333 !important;
   color: #FFFFFF !important;
   font-family: 'Roboto', sans-serif !important;
 }
 
-.ant-input::placeholder {
+.ant-input::placeholder,
+textarea.ant-input::placeholder {
   color: #666 !important;
 }
 
 .ant-input:focus,
-.ant-input-focused {
+.ant-input-focused,
+.ant-input-number:focus,
+textarea.ant-input:focus {
   border-color: #1E90FF !important;
   box-shadow: 0 0 0 2px rgba(30, 144, 255, 0.2) !important;
 }
@@ -122,13 +126,8 @@ body {
 }
 
 .ant-input-number {
-  background: #1a1a1a !important;
+  background: #000000 !important;
   border: 1px solid #333 !important;
-}
-
-.ant-input-number-input {
-  color: #FFFFFF !important;
-  font-family: 'Roboto', sans-serif !important;
 }
 
 .ant-dropdown-menu {
@@ -171,26 +170,140 @@ body {
   background: #39FF14;
 }
 
-.success-modal-custom .ant-modal-content {
+.ant-table {
+  background: transparent !important;
+  color: #FFFFFF !important;
+}
+
+.ant-table-thead > tr > th {
+  background: #1a1a1a !important;
+  color: #FFFFFF !important;
+  border-bottom: 2px solid #1E90FF !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 600 !important;
+}
+
+.ant-table-tbody > tr {
   background: #000000 !important;
-  padding: 0 !important;
-  box-shadow: 0 0 30px rgba(57, 255, 20, 0.3) !important;
-  border-radius: 8px !important;
+  border-bottom: 1px solid #333 !important;
 }
 
-.success-modal-custom .ant-modal-body {
+.ant-table-tbody > tr:hover > td {
+  background: #1a1a1a !important;
+}
+
+.ant-table-tbody > tr > td {
+  color: #FFFFFF !important;
+  border-bottom: 1px solid #333 !important;
+  font-family: 'Roboto', sans-serif !important;
+}
+
+.ant-table-cell {
+  background: transparent !important;
+}
+
+.ant-pagination-item {
+  background: #1a1a1a !important;
+  border: 1px solid #333 !important;
+}
+
+.ant-pagination-item a {
+  color: #FFFFFF !important;
+}
+
+.ant-pagination-item:hover {
+  border-color: #1E90FF !important;
+}
+
+.ant-pagination-item-active {
+  background: #1E90FF !important;
+  border-color: #1E90FF !important;
+}
+
+.ant-pagination-item-active a {
+  color: #000000 !important;
+  font-weight: bold !important;
+}
+
+.ant-select-dropdown,
+.ant-select-selector {
+  background: #1a1a1a !important;
+  border: 1px solid #333 !important;
+}
+
+.ant-select-item {
+  color: #FFFFFF !important;
+}
+
+.ant-select-item-option-selected {
+  background: #1E90FF !important;
+  color: #000000 !important;
+}
+
+.ant-select-item:hover,
+.ant-select-item-option-active {
+  background: #333 !important;
+}
+
+.ant-select-arrow,
+.ant-select-selection-item {
+  color: #FFFFFF !important;
+}
+
+.ant-modal-mask {
+  background: rgba(0, 0, 0, 0.85) !important;
+}
+
+.ant-modal-content {
+  background: #1a1a1a !important;
+  border: 2px solid #1E90FF !important;
+}
+
+.ant-modal-header {
+  background: #1a1a1a !important;
+  border-bottom: 2px solid #1E90FF !important;
+}
+
+.ant-modal-title {
+  color: #FFFFFF !important;
+  font-family: 'Orbitron', sans-serif !important;
+}
+
+.ant-modal-body {
+  background: #1a1a1a !important;
+  color: #FFFFFF !important;
+}
+
+.ant-modal-footer {
+  background: #1a1a1a !important;
+  border-top: 2px solid #333 !important;
+}
+
+.ant-modal-close {
+  color: #FFFFFF !important;
+}
+
+.ant-form-item-label > label {
+  color: #FFFFFF !important;
+  font-family: 'Roboto', sans-serif !important;
+}
+
+.ant-input-number-handler-wrap {
   background: #000000 !important;
-  padding: 0 !important;
+  border-left: 1px solid #333 !important;
 }
 
-.success-modal-custom .ant-modal-confirm-body {
-  padding: 0 !important;
+.ant-input-number-handler {
+  color: #FFFFFF !important;
+  border-color: #333 !important;
 }
 
-.success-modal-custom .ant-modal-confirm-content {
-  margin: 0 !important;
+.ant-input-number-handler:hover {
+  color: #1E90FF !important;
 }
 
-.success-modal-custom .ant-modal-confirm-btns {
-  display: none !important;
+.ant-form-item-explain-error {
+  color: #ff4d4f !important;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 12px !important;
 }
