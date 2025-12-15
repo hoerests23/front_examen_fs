@@ -1,0 +1,28 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TextInput > debería coincidir con el snapshot - con valor inicial 1`] = `
+<input
+  class="ant-input ant-input-outlined css-var-root ant-input-css-var"
+  placeholder="Name"
+  type="text"
+  value="Initial Value"
+/>
+`;
+
+exports[`TextInput > debería coincidir con el snapshot - input de password 1`] = `
+<input
+  class="ant-input ant-input-outlined css-var-root ant-input-css-var"
+  placeholder="Password"
+  type="password"
+  value=""
+/>
+`;
+
+exports[`TextInput > debería coincidir con el snapshot - input de texto 1`] = `
+<input
+  class="ant-input ant-input-outlined css-var-root ant-input-css-var"
+  placeholder="Snapshot test"
+  type="text"
+  value=""
+/>
+`;

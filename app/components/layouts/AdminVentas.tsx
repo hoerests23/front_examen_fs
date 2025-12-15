@@ -121,11 +121,6 @@ export default function AdminVentas() {
 
   const userMenuItems = [
     {
-      key: "profile",
-      icon: <UserOutlined />,
-      label: "Mi Perfil",
-    },
-    {
       key: "logout",
       icon: <LogoutOutlined />,
       label: "Cerrar Sesión",

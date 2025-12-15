@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CartDrawer > debería coincidir con el snapshot - carrito vacío 1`] = `<div />`;
+
+exports[`CartDrawer > debería coincidir con el snapshot - con items 1`] = `<div />`;
